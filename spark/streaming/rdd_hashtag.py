@@ -55,8 +55,8 @@ if __name__ == "__main__":
 			# Convert RDD[String] to RDD[Row] to DataFrame
 			# we want to convert RDD[Tweet] to RDD[Row]
 			# this is where we loose (would duh python..) type safety!
-			rowRdd = rdd.map(lambda w: Row(tag=w[0], count=w[1]))
-			tweets_data_frame = spark.createDataFrame(rowRdd)
+			row_rdd = rdd.map(lambda w: Row(tag=w[0], count=w[1]))
+			tweets_data_frame = spark.createDataFrame(row_rdd)
 
 			# Creates a temporary view using the DataFrame.
 			tweets_data_frame.createOrReplaceTempView("hashtags")
