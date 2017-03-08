@@ -1,4 +1,4 @@
---UES 2: Functions
+-- Some math functions
 
 addDigit :: Int -> Int -> Int
 -- Adds single digit to end of integer

@@ -1,4 +1,5 @@
--- PPT 2
+-- Some maths functions...
+
 import Hugs.Prelude
 
 isPrime :: Int -> Bool
