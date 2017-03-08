@@ -1,7 +1,0 @@
-Simple HTML document parser.
-
-Takes two files as input one containing the page contents; the other a template file to build around.
-
-Sample input files create an artist page for a pair of my favorite artists, The Dollis Hill duo 4hero.
-
-Outputs the HTML in the file "infofile.html"
