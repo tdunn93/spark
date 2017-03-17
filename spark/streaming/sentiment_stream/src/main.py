@@ -55,10 +55,10 @@ if __name__ == "__main__":
 		sc.parallelize(["im so happy with my results"])
 		.map(lambda x: x.split(' '))
 		.map(lambda y: Row(text=y)) #nb dont need to add scheme just specify here..
-		.toDF(schema=StructType().add("text", StringType(), True))
+		.toDF()
 	)
 
-	model.transform(positive_string).select("filtered", "prediction").show(truncate=False)
+#	model.transform(positive_string).select("filtered", "prediction").show(truncate=False)
 	lines = stream.get_text_stream()
 
 	words = lines.flatMap(lambda x: x.split('\n'))

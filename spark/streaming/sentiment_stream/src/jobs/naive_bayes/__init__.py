@@ -63,12 +63,11 @@ def process(spark, model):
 
 			# Convert RDD[String] to RDD[Row] to DataFrame
 			words_data_frame = spark.createDataFrame(
-				rdd.map(lambda x: x.split(' ')).map(lambda y: Row(text=y))
+				rdd.map(lambda y: Row(text=y))
 			)
-			words_data_frame.select("*").show()
 
 			model.transform(words_data_frame).select(
-				"filtered",
+				"words",
 				"prediction"
 				).show(truncate=False)
 
