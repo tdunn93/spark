@@ -1,3 +1,9 @@
+"""
+	The entry point for the spark jobs, spark context is created here
+
+	Performs sentiment analysis using Naive Bayes on an incomming stream of
+	tweets in real time, model trained using the sentiment140 tweets dataset
+"""
 from pyspark.sql import SparkSession, Row
 
 from jobs.stream import DataStream
@@ -47,24 +53,16 @@ if __name__ == "__main__":
 			schema=fields
 		)
 
+	#initialise and train the model
 	naive_bayes = NaiveBayesModel(training_data_frame)
+
+	#print the accuracy
 	naive_bayes.calculate_accuracy(test_data_frame)
 	model = naive_bayes.get_model()
 
-	positive_string = (
-		sc.parallelize(["im so happy with my results"])
-		.map(lambda x: x.split(' '))
-		.map(lambda y: Row(text=y)) #nb dont need to add scheme just specify here..
-		.toDF()
-	)
-
-#	model.transform(positive_string).select("filtered", "prediction").show(truncate=False)
 	lines = stream.get_text_stream()
 
 	words = lines.flatMap(lambda x: x.split('\n'))
 	words.foreachRDD(process(spark, model))
 
 	stream.start()
-
-
-

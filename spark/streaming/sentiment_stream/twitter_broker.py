@@ -1,19 +1,17 @@
 """
 Twitter broker as pyspark does not have in built twitter support...
 """
-
-import tweepy
-from tweepy import OAuthHandler
-from tweepy import Stream
-from tweepy.streaming import StreamListener
 import socket
 import sys
 import json
 
-consumer_key = 'KSzFTRL8VHTHK3C0bZLdjlsw2'
-consumer_secret = 'h1EaYUaRfS2rbdJnCdBqRWOY64kNFYbGM6TZu0x7D7cWoKAHRo'
-access_token = '331544155-yBNZkRXGZeyNeBFZz67SIC8paPL0D4BOpFk2x8bV'
-access_secret = 'M79hmuTKn94Yha0nlYAWFa1vGuHK7Xz6OLjK9G6OMpgbP'
+from tweepy import OAuthHandler, Stream
+from tweepy.streaming import StreamListener
+
+consumer_key = ''
+consumer_secret = ''
+access_token = ''
+access_secret = ''
 
 class TweetsListener(StreamListener):
 
@@ -23,8 +21,7 @@ class TweetsListener(StreamListener):
 	def on_data(self, data):
 		try:
 			msg = json.loads(data)
-			print(msg['text'].encode('utf-8'))
-			print('\n')
+			print(msg['text'].encode('utf-8') + '\n')
 		#	print (msg['text'], msg['user']['screen_name'], msg['user']['location'])
 			self.client_socket.send(msg['text'].encode('utf-8') + '\n')
 			return True
@@ -40,18 +37,18 @@ def sendData(c_socket):
 	auth = OAuthHandler(consumer_key, consumer_secret)
 	auth.set_access_token(access_token, access_secret)
 	twitter_stream = Stream(auth, TweetsListener(c_socket))
-	twitter_stream.filter(track=['trump'])
+	twitter_stream.filter(track=['brexit'])
 
 if __name__ == "__main__":
-	s = socket.socket()         # Create a socket object
-	host = "toby-linux"         # Get local machine name
-	port = int(sys.argv[1])                 # Reserve a port for your service.)
-	s.bind((host, port))        # Bind to the port
+	s = socket.socket()         #create a socket object
+	host = "toby-linux"         #get local machine name
+	port = int(sys.argv[1])     #reserve a port for your service.
+	s.bind((host, port))        #bind to the port
 
 	print("Listening on port: %s" % str(port))
 
-	s.listen(5)                 # Now wait for client connection.
-	c, addr = s.accept()        # Establish connection with client.
+	s.listen(5)                 #now wait for client connection.
+	c, addr = s.accept()        #establish connection with client.
 
 	print("Received request from: " + str(addr))
 

@@ -14,6 +14,9 @@ from pyspark.ml.evaluation import MulticlassClassificationEvaluator
 
 
 class NaiveBayesModel:
+"""
+Creates a Naive Bayes model using pipelines
+"""
 	def __init__(self, training_data):
 		self.training_data = training_data
 
@@ -21,11 +24,10 @@ class NaiveBayesModel:
 		self.remover = StopWordsRemover(inputCol=self.regex_tokenizer.getOutputCol(), outputCol="filtered")
 		self.hashing_tf = HashingTF(inputCol=self.remover.getOutputCol(), outputCol="features")
 
-		#Column names "features" and "labels" are defaults in the ml NB API
+		#column names "features" and "labels" are defaults in the spark ml NB API
 		#so no need to specify columns to run model on
 		self.naive_bayes = NaiveBayes(smoothing=1.0, modelType="multinomial")
 
-		#Can just pipeline the DF, no need to turn into labelled point!
 		self.model = (
 			Pipeline(stages=[
 				self.regex_tokenizer,
@@ -51,7 +53,6 @@ class NaiveBayesModel:
 		print("Model accuracy: %s" % accuracy)
 
 
-# this could be even more general in an mlib shared..
 def process(spark, model):
 	"""
 	takes a model and performs a transformation on the incomming rdd on it
@@ -60,8 +61,7 @@ def process(spark, model):
 		print("========= %s =========" % str(time))
 
 		try:
-
-			# Convert RDD[String] to RDD[Row] to DataFrame
+			#convert RDD[String] to RDD[Row] to DataFrame
 			words_data_frame = spark.createDataFrame(
 				rdd.map(lambda y: Row(text=y))
 			)
@@ -75,4 +75,3 @@ def process(spark, model):
 			pass
 
 	return _process
-

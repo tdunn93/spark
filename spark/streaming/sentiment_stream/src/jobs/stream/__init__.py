@@ -1,3 +1,6 @@
+"""
+	Encapsulate a spark DStream
+"""
 from pyspark.streaming import StreamingContext
 from pyspark.sql import Row
 
@@ -7,7 +10,7 @@ class DataStream:
 		self.spark = spark_session
 		self.ssc = StreamingContext(sc, 1)
 
-		# Create a socket stream on port 5555
+		#create a socket stream on port 5555
 		self.lines = self.ssc.socketTextStream("toby-linux", port)
 
 	def get_text_stream(self):
@@ -16,5 +19,3 @@ class DataStream:
 	def start(self):
 		self.ssc.start()
 		self.ssc.awaitTermination()
-
-	
