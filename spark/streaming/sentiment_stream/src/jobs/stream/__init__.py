@@ -1,5 +1,5 @@
 """
-	Encapsulate a spark DStream
+Encapsulate a spark DStream
 """
 from pyspark.streaming import StreamingContext
 from pyspark.sql import Row
