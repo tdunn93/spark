@@ -14,9 +14,9 @@ from pyspark.ml.evaluation import MulticlassClassificationEvaluator
 
 
 class NaiveBayesModel:
-"""
-Creates a Naive Bayes model using pipelines
-"""
+	"""
+	Creates a Naive Bayes model using pipelines
+	"""
 	def __init__(self, training_data):
 		self.training_data = training_data
 

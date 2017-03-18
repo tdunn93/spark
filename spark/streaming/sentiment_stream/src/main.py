@@ -1,8 +1,8 @@
 """
-	The entry point for the spark jobs, spark context is created here
+The entry point for the spark jobs, spark context is created here
 
-	Performs sentiment analysis using Naive Bayes on an incomming stream of
-	tweets in real time, model trained using the sentiment140 tweets dataset
+Performs sentiment analysis using Naive Bayes on an incomming stream of
+tweets in real time, model trained using the sentiment140 tweets dataset
 """
 from pyspark.sql import SparkSession, Row
 
