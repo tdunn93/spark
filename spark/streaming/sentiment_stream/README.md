@@ -19,4 +19,10 @@ Job structure
 
 Example run
 
-```zip -r jobs.zip src/jobs && ./spark-submit --master spark://toby-linux:7077 src/main.py --py-files src/jobs.zip```
+  Start broker on port 5555:
+  
+ ``` python twitter_broker.py 5555```
+ 
+ Submit job to spark cluster
+   
+```zip -r jobs.zip src/jobs && ./spark-submit --master spark://master-hostname:7077 src/main.py --py-files src/jobs.zip```
