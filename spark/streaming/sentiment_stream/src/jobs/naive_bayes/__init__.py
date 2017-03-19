@@ -1,3 +1,4 @@
+import json
 from pyspark.sql import Row
 from pyspark.sql.types import (
 	StructType,
@@ -63,12 +64,17 @@ def process(spark, model):
 		try:
 			#convert RDD[String] to RDD[Row] to DataFrame
 			words_data_frame = spark.createDataFrame(
-				rdd.map(lambda y: Row(text=y))
+#				rdd.map(lambda y: json.loads(y)['text'])
+				rdd.map(lambda y: Row(
+					text=(json.loads(y.decode('utf-8')))['text'],
+					location=json.loads(y.decode('utf-8'))['user']['location']
+				)
 			)
 
 			model.transform(words_data_frame).select(
 				"words",
-				"prediction"
+				"prediction",
+				"location"
 				).show(truncate=False)
 
 		except:
