@@ -13,6 +13,7 @@ consumer_secret = ''
 access_token = ''
 access_secret = ''
 
+
 class TweetsListener(StreamListener):
 
 	def __init__(self, csocket):
@@ -20,10 +21,8 @@ class TweetsListener(StreamListener):
 
 	def on_data(self, data):
 		try:
-			msg = json.loads(data)
-			print(msg['text'].encode('utf-8') + '\n')
-		#	print (msg['text'], msg['user']['screen_name'], msg['user']['location'])
-			self.client_socket.send(msg['text'].encode('utf-8') + '\n')
+			print data
+			self.client_socket.send(data)
 			return True
 		except BaseException as e:
 			print("Error on_data: %s" % str(e))

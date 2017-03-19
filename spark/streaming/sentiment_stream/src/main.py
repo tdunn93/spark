@@ -4,6 +4,7 @@ The entry point for the spark jobs, spark context is created here
 Performs sentiment analysis using Naive Bayes on an incomming stream of
 tweets in real time, model trained using the sentiment140 tweets dataset
 """
+import json
 from pyspark.sql import SparkSession, Row
 
 from jobs.stream import DataStream
@@ -59,7 +60,6 @@ if __name__ == "__main__":
 	#print the accuracy
 	naive_bayes.calculate_accuracy(test_data_frame)
 	model = naive_bayes.get_model()
-
 	lines = stream.get_text_stream()
 
 	words = lines.flatMap(lambda x: x.split('\n'))
